@@ -16,13 +16,13 @@ const addStoredReadList = (id) => {
 
   if (storedList.includes(id)) {
     // already exist
-    console.log(id, "already exist in the read list");
+    toast.error("Already exist in the read list");
   } else {
     storedList.push(id);
     const storedListStr = JSON.stringify(storedList);
     localStorage.setItem("readlist", storedListStr);
 
-    toast("This book is added to your read list.");
+    toast.success("This book is added to your read list.");
   }
 };
 
@@ -42,11 +42,13 @@ const addStoredWishList = (id) => {
 
   if (storedWishList.includes(id)) {
     // already exist
-    console.log(id, "already exist in the wish list");
+    toast.error("Already exist in the wishlist");
   } else {
     storedWishList.push(id);
     const storedWishListStr = JSON.stringify(storedWishList);
     localStorage.setItem("wishlist", storedWishListStr);
+
+    toast.success("This book is added to your wishlist.");
   }
 };
 

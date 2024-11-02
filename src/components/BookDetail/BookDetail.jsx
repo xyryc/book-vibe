@@ -5,13 +5,9 @@ import { addStoredReadList, addStoredWishList } from "../../utility/addToDb";
 const BookDetail = () => {
   const { bookId } = useParams();
   const id = parseInt(bookId);
-  //   console.log(bookId);
-
   const data = useLoaderData();
-  //   console.log(data);
 
   const book = data.find((book) => book.bookId === id);
-  console.log(book);
 
   const {
     bookId: currentBookId,
@@ -20,6 +16,11 @@ const BookDetail = () => {
     author,
     category,
     review,
+    tags,
+    totalPages,
+    publisher,
+    yearOfPublishing,
+    rating,
   } = book;
 
   const handleMarkAsRead = (id) => {
@@ -31,9 +32,9 @@ const BookDetail = () => {
   };
 
   return (
-    <div className="my-14 flex flex-col md:flex-row md:gap-12">
+    <div className="my-14 flex flex-col md:flex-row md:gap-12 items-center">
       <img
-        className="w-[425px] p-[74px] bg-slate-100 rounded-2xl"
+        className="h-[564px] p-[74px] rounded-2xl"
         src={image}
         alt={bookName}
       />
@@ -53,7 +54,47 @@ const BookDetail = () => {
           {review}
         </p>
 
-        <div className="flex gap-4">
+        <div className="font-bold">
+          Tag
+          {tags.map((tag, index) => (
+            <span key={index} className="font-medium px-6 text-[#23BE0A]">
+              #{tag}
+            </span>
+          ))}
+        </div>
+
+        <hr className="my-6" />
+
+        <div>
+          <div className="overflow-x-auto">
+            <table className="table">
+              <tbody>
+                {/* row 1 */}
+                <tr>
+                  <td className="text-gray-600">Number of Pages: </td>
+                  <td className="font-semibold">{totalPages}</td>
+                </tr>
+                {/* row 2 */}
+                <tr>
+                  <td className="text-gray-600">Publisher</td>
+                  <td className="font-semibold">{publisher}</td>
+                </tr>
+                {/* row 3 */}
+                <tr>
+                  <td className="text-gray-600">Year of Publishing</td>
+                  <td className="font-semibold">{yearOfPublishing}</td>
+                </tr>
+                {/* row 4 */}
+                <tr>
+                  <td className="text-gray-600">Rating</td>
+                  <td className="font-semibold">{rating}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div className="flex gap-4 mt-4">
           <button
             onClick={() => handleMarkAsRead(bookId)}
             className="btn btn-outline"
@@ -62,7 +103,7 @@ const BookDetail = () => {
           </button>
           <button
             onClick={() => handleWishList(bookId)}
-            className="btn btn-accent"
+            className="btn bg-[#50B1C9] text-white"
           >
             Add to Wishlist
           </button>

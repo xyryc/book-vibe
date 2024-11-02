@@ -4,6 +4,7 @@ import "react-tabs/style/react-tabs.css";
 import { getStoredReadList } from "../../utility/addToDb";
 import { useLoaderData } from "react-router-dom";
 import Book from "../Book/Book";
+import ListedBook from "../ListedBook/ListedBook";
 
 const ListedBooks = () => {
   const [readList, setReadList] = useState([]);
@@ -39,23 +40,27 @@ const ListedBooks = () => {
 
   return (
     <div>
-      <h3 className="text-3xl">Books</h3>
+      <h3 className="text-3xl font-bold py-9 rounded-3xl bg-slate-100 text-center">
+        Books
+      </h3>
 
-      <div className="dropdown">
-        <div tabIndex="0" role="button" className="btn m-1">
-          {sort ? `Sort by: ${sort}` : "Sort By"}
+      <div className="text-center mb-14">
+        <div className="dropdown ">
+          <div tabIndex="0" role="button" className="btn m-1 bg-[#23BE0A] text-white">
+            {sort ? `Sort by: ${sort}` : "Sort By"}
+          </div>
+          <ul
+            tabIndex="0"
+            className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
+          >
+            <li onClick={() => handleSort("Ratings")}>
+              <a>Ratings</a>
+            </li>
+            <li onClick={() => handleSort("No. of pages")}>
+              <a>Number of pages</a>
+            </li>
+          </ul>
         </div>
-        <ul
-          tabIndex="0"
-          className="dropdown-content menu bg-base-100 rounded-box z-[1] w-52 p-2 shadow"
-        >
-          <li onClick={() => handleSort("Ratings")}>
-            <a>Ratings</a>
-          </li>
-          <li onClick={() => handleSort("No. of pages")}>
-            <a>Number of pages</a>
-          </li>
-        </ul>
       </div>
 
       <Tabs>
@@ -65,9 +70,8 @@ const ListedBooks = () => {
         </TabList>
 
         <TabPanel>
-          <h2>Books i read: {readList.length}</h2>
           {readList.map((book) => (
-            <Book key={book.bookId} book={book}></Book>
+            <ListedBook key={book.bookId} book={book}></ListedBook>
           ))}
         </TabPanel>
         <TabPanel>
