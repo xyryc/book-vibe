@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { Tab, Tabs, TabList, TabPanel } from "react-tabs";
 import "react-tabs/style/react-tabs.css";
-import { getStoredReadList } from "../../utility/addToDb";
+import { getStoredReadList, getStoredWishList } from "../../utility/addToDb";
 import { useLoaderData } from "react-router-dom";
 import Book from "../Book/Book";
 import ListedBook from "../ListedBook/ListedBook";
 
 const ListedBooks = () => {
   const [readList, setReadList] = useState([]);
+  const [wishList, setWishList] = useState([])
   const [sort, setSort] = useState("");
   const allBooks = useLoaderData();
 
@@ -22,6 +23,18 @@ const ListedBooks = () => {
     setReadList(readBookList);
   }, []);
 
+
+  useEffect(() => {
+    const storedWishList = getStoredWishList();
+    const storedWishListInt = storedWishList.map((id) => parseInt(id));
+
+    const wishBookList = allBooks.filter((book) =>
+      storedWishListInt.includes(book.bookId)
+    );
+
+    setWishList(wishBookList);
+  }, []);
+
   const handleSort = (sortType) => {
     setSort(sortType);
 
@@ -30,11 +43,19 @@ const ListedBooks = () => {
         (a, b) => b.totalPages - a.totalPages
       );
       setReadList(sortedReadList);
+
+      const sortedWishList = [...wishList].sort(
+        (a, b) => b.totalPages - a.totalPages
+      );
+      setWishList(sortedWishList);
     }
 
     if (sortType === "Ratings") {
       const sortedReadList = [...readList].sort((a, b) => b.rating - a.rating);
       setReadList(sortedReadList);
+
+      const sortedWishList = [...wishList].sort((a, b) => b.rating - a.rating);
+      setWishList(sortedWishList);
     }
   };
 
@@ -75,7 +96,9 @@ const ListedBooks = () => {
           ))}
         </TabPanel>
         <TabPanel>
-          <h2>My wishlist</h2>
+        {wishList.map((book) => (
+            <ListedBook key={book.bookId} book={book}></ListedBook>
+          ))}
         </TabPanel>
       </Tabs>
     </div>
