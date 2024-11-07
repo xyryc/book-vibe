@@ -1,4 +1,5 @@
 import React from "react";
+import { Helmet } from "react-helmet-async";
 import { useLoaderData } from "react-router-dom";
 import {
   CartesianGrid,
@@ -14,7 +15,12 @@ const Dashboard = () => {
   const bookData = useLoaderData();
 
   return (
+    
     <div className="overflow-auto">
+       <Helmet>
+        <title>Dashboard | Book Vibe</title>
+      </Helmet>
+
       <LineChart
         width={1900}
         height={450}

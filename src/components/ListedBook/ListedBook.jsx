@@ -3,6 +3,7 @@ import { IoLocationOutline } from "react-icons/io5";
 import { LuUsers } from "react-icons/lu";
 import { CgFileDocument } from "react-icons/cg";
 import { Link } from "react-router-dom";
+import { Helmet } from "react-helmet-async";
 
 const ListedBook = ({ book }) => {
   const {
@@ -20,6 +21,11 @@ const ListedBook = ({ book }) => {
 
   return (
     <div className="p-6 border rounded-2xl sm:flex items-center gap-6 my-6">
+       <Helmet>
+        <title>Listed Books | Book Vibe</title>
+
+      </Helmet>
+
       <img
         className="h-[172px] px-12 py-7 rounded-2xl bg-slate-100"
         src={image}

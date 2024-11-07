@@ -5,6 +5,7 @@ import { getStoredReadList, getStoredWishList } from "../../utility/addToDb";
 import { useLoaderData } from "react-router-dom";
 import Book from "../Book/Book";
 import ListedBook from "../ListedBook/ListedBook";
+import { Helmet } from "react-helmet-async";
 
 const ListedBooks = () => {
   const [readList, setReadList] = useState([]);
@@ -61,6 +62,11 @@ const ListedBooks = () => {
 
   return (
     <div>
+       <Helmet>
+        <title>Listed Books | Book Vibe</title>
+  
+      </Helmet>
+
       <h3 className="text-3xl font-bold py-9 rounded-3xl bg-slate-100 text-center">
         Books
       </h3>
